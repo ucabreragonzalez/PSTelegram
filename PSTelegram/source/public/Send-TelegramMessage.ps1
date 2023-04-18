@@ -17,11 +17,15 @@ Function Send-TelegramMessage
 		[ValidateSet("MarkdownV2", "HTML", "Markdown")]
 		[String]
 		$ParseMode,
+		# If the message is a reply, ID of the original message
+		[Parameter(Position = 3, Mandatory = $false)]
+		[String]
+		$ReplyToMessageId,
 		#----------------------
 		#TODO: Add more API options
 		#----------------------
 		# Unique authentication token given when bot was created
-		[Parameter(Position = 3, Mandatory = $false)]
+		[Parameter(Position = 4, Mandatory = $false)]
 		[String]
 		$Token
 	)
@@ -41,6 +45,11 @@ Function Send-TelegramMessage
 			# If ParseMode
 			if($ParseMode){
 				$splat.Parameters += @{parse_mode = $ParseMode}
+			}
+
+			# If ReplyToMessageId
+			if($ReplyToMessageId){
+				$splat.Parameters += @{reply_to_message_id = $ReplyToMessageId}
 			}
 
 			# If Token
