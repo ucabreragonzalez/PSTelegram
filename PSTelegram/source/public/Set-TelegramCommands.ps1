@@ -3,7 +3,8 @@ Function Set-TelegramCommands
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param
 	(
-		# Unique identifier for the target chat
+		# List of bot commands to be set as the list of the bot's commands
+		# the command itself should not contain spaces eg. 'command1' rather than 'command 1'.
 		[Parameter(Position = 0, Mandatory = $true)]
 		[System.Collections.ArrayList]
 		$Commands,
@@ -27,11 +28,6 @@ Function Set-TelegramCommands
 				}
 			}
 
-			# If ParseMode
-			if($ParseMode){
-				$splat.Parameters += @{parse_mode = $ParseMode}
-			}
-
 			# If Token
 			if($Token){
 				$splat += @{Token = $Token}
@@ -50,15 +46,25 @@ Change the list of the a bot commands
 .DESCRIPTION
 Change the list of the a bot commands
 
-.PARAMETER Name
-
-.INPUTS
-
-.OUTPUTS
-
 .EXAMPLE
+$Parameters = @{
+    Commands = @(
+        @{
+            command = "command1"
+            description = "description 1"
+        },
+        @{
+            command = "command2"
+            description = "description 2"
+        }
+    )
+    Token = "123456789:#################################"
+}
+
+Set-TelegramCommands @Parameters
 
 .LINK
+https://core.telegram.org/bots/api#setmycommands
 
 #>
 }
